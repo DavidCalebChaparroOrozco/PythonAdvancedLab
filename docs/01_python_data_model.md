@@ -54,8 +54,10 @@ That is the **entire** protocol.
 class Box:
     def __len__(self):
         return 5
+
+
 box = Box()
-print(len(box)) # Result: 5
+print(len(box))  # Result: 5
 ```
 
 It meets all three requirements. From that point on, `len(box)` works.
@@ -106,6 +108,7 @@ class Dog:
 
     def __str__(self):
         return f"A dog named {self.name}"
+
 
 my_dog = Dog("Buddy")
 print(my_dog)  # Automatically calls my_dog.__str__()

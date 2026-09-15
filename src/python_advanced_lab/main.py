@@ -1,6 +1,6 @@
 from python_advanced_lab.pipeline import clear_names, register, summary
 
-def main():
+def main() -> None:
     print(clear_names(["  Caleb", "DAVID   "]))
     register("high")
     register("low")
