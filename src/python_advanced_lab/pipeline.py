@@ -9,7 +9,7 @@ def clear_names(names: list[str]) -> list[str]:
 
 
 def load_config(path: str | None = None) -> dict:
-    if path == None: #noqa: E711
+    if path == None:  # noqa: E711
         return "config.json"
     file = open(path)
     data = json.load(file)

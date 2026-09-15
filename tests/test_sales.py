@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 def sales_summary() -> pd.DataFrame:
     sales = pd.DataFrame(
         {
@@ -11,6 +12,7 @@ def sales_summary() -> pd.DataFrame:
 
     sales["total"] = sales["units"] * sales["price"]
     return sales.groupby("product", as_index=False)["total"].sum()
+
 
 if __name__ == "__main__":
     print(sales_summary())
