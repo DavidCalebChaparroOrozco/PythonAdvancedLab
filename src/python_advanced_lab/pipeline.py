@@ -1,5 +1,5 @@
 import json
-
+from typing import Any
 
 def clear_names(names: list[str]) -> list[str]:
     clean = []
@@ -8,17 +8,15 @@ def clear_names(names: list[str]) -> list[str]:
     return clean
 
 
-def load_config(path: str | None = None) -> dict:
-    if path == None: #noqa: E711
-        return "config.json"
-    file = open(path)
-    data = json.load(file)
-
+def load_config(path: str | None = None) -> dict[str, Any]:
+    target_path = path if path is not None else "config.json"  # noqa: E711
+    with open(target_path, "r", encoding="utf-8") as file:
+        data: dict[str, Any] = json.load(file)
     file.close()
     return data
 
 
-def register(event, history=None):
+def register(event: str, history: list[str] | None = None) -> list[str]:
     if history is None:
         history = []
     history.append(event)
