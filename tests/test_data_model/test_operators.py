@@ -1,5 +1,5 @@
 """
-    Unit tests for the Server comparison protocols (Data Model).
+Unit tests for the Server comparison protocols (Data Model).
 """
 
 from python_advanced_lab.data_model.operators import Server
@@ -20,7 +20,7 @@ def test_server_version_comparison() -> None:
     """
     older = Server("db-01", "ubuntu", "20.10")
     newer = Server("db-02", "ubuntu", "22.04")
-    
+
     assert older < newer
     assert not newer < older
     assert min([newer, older]) == older

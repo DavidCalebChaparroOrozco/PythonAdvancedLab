@@ -1,13 +1,18 @@
 """
-    Module to practice Python Data Model operator overloading and comparisons.
+Module to practice Python Data Model operator overloading and comparisons.
 """
+
 from typing import Any
+
 
 class Server:
     """
-        Represents a network server with version tracking and comparison protocols.
+    Represents a network server with version tracking and comparison protocols.
     """
-    def __init__(self, name: str, os_name: str, version: str, services: list[str] | None = None) -> None:
+
+    def __init__(
+        self, name: str, os_name: str, version: str, services: list[str] | None = None
+    ) -> None:
         self.name: str = name
         self.os: str = os_name
         self.version: str = version
@@ -21,7 +26,7 @@ class Server:
             return NotImplemented
         return self.name == other.name
 
-    def __lt__(self, other:"Server") -> bool:
+    def __lt__(self, other: "Server") -> bool:
         if not isinstance(other, Server):
             return NotImplemented
         return self._tuple_version() < other._tuple_version()
@@ -32,7 +37,7 @@ class Server:
 
 def main() -> None:
     """
-        Execution sandbox to reproduce the insights.
+    Execution sandbox to reproduce the insights.
     """
     a = Server("web-01", "ubuntu", "22.04", ["nginx", "postgres"])
     b = Server("web-01", "ubuntu", "22.04", ["nginx", "postgres"])  # same data
@@ -49,6 +54,7 @@ def main() -> None:
     # Let's assume I want to see the lowest version of the servers.
     servers = [a, b, c]
     print("Lowest version server:", min(servers))
+
 
 # The first time:
 # a: <__main__.Server object at 0x0000019CD2AB0C80>
@@ -91,7 +97,7 @@ def main() -> None:
 # a in [c, b]: True
 # a < c: False
 # Server('db-01', ubuntu 20.10, 1 svc)
-# 
+#
 
 if __name__ == "__main__":
     main()

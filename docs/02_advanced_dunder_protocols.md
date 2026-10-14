@@ -93,7 +93,7 @@ class Person:
 
 person = Person("Caleb")
 
-print(person)       # Person: Caleb
+print(person)  # Person: Caleb
 print(str(person))  # Person: Caleb
 print(len(person))  # 5
 ```
@@ -462,8 +462,8 @@ If `__bool__` is not defined, Python can fall back to `__len__`: an object with 
 ```python
 filter = Filter(10)  # __init__ runs ONCE, when the object is created
 
-filter(15)           # True
-filter(5)            # False
+filter(15)  # True
+filter(5)  # False
 ```
 
 Every time `filter(...)` is used, `__call__` runs again.
@@ -522,7 +522,7 @@ class Filter:
 filter = Filter(10)
 
 print(filter(15))  # True
-print(filter(5))   # False
+print(filter(5))  # False
 print(filter(20))  # True
 ```
 
@@ -568,7 +568,7 @@ class Filter:
 filter = Filter(10)
 
 print(filter.check(15))  # True
-print(filter.check(5))   # False
+print(filter.check(5))  # False
 ```
 
 Here, you explicitly call the `check()` method.
@@ -587,7 +587,7 @@ class Filter:
 filter = Filter(10)
 
 print(filter(15))  # True
-print(filter(5))   # False
+print(filter(5))  # False
 ```
 
 Here, the object itself behaves like a function.
@@ -919,10 +919,7 @@ You decide what the brackets mean for your object.
 ```python
 class Person:
     def __init__(self, name, age):
-        self.data = {
-            "name": name,
-            "age": age
-        }
+        self.data = {"name": name, "age": age}
 
     def __getitem__(self, key):
         return self.data[key]
@@ -931,7 +928,7 @@ class Person:
 person = Person("Caleb", 27)
 
 print(person["name"])  # Caleb
-print(person["age"])   # 27
+print(person["age"])  # 27
 ```
 
 Now your object behaves somewhat like a dictionary:

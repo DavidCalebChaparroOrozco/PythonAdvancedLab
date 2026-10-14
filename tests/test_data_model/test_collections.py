@@ -1,5 +1,5 @@
 """
-    Unit tests for container emulation protocols.
+Unit tests for container emulation protocols.
 """
 
 from python_advanced_lab.data_model.collections import ServerCluster

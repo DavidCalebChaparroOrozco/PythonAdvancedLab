@@ -23,7 +23,7 @@ Automated testing
 `test_add.py`
 
 ```python
-def test_add():    
+def test_add():
     assert add(2, 3) == 5
 ```
 
@@ -84,7 +84,7 @@ def test_version(self):
 File: `test_check.py`
 
 ```python
-def test_version():    
+def test_version():
     assert "1.9" < "1.10"
 ```
 
@@ -182,9 +182,10 @@ File: `tests/test_inventory.py`
 ```python
 from inventory import Server
 
-def test_older_version_is_lower():    
-    old = Server("etl-01", "ubuntu", "20.04")    
-    new = Server("web-02", "ubuntu", "24.04")    
+
+def test_older_version_is_lower():
+    old = Server("etl-01", "ubuntu", "20.04")
+    new = Server("web-02", "ubuntu", "24.04")
 
     assert old < new
 ```
@@ -226,8 +227,7 @@ assert old < new
 For `old < new` to work as intended, the `Server` class must implement appropriate comparison behavior, typically through the `__lt__()` method.
 
 ```python
-def __lt__(self, other):    
-    ...
+def __lt__(self, other): ...
 ```
 
 The `__lt__()` method defines how Python evaluates the less-than operator (`<`) for instances of that class.

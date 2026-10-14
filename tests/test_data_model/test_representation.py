@@ -10,12 +10,12 @@ def test_developer_representation_protocols() -> None:
     Validates __repr__ and __str__ produce the exact expected outputs.
     """
     # Given
-    dev = AdvancedDeveloper(
-        username="caleb_dev", experience_years=5, skills=["Python", "Git"]
-    )
+    dev = AdvancedDeveloper(username="caleb_dev", experience_years=5, skills=["Python", "Git"])
 
     # When & Then (Testing __repr__)
-    expected_repr = "AdvancedDeveloper(username='caleb_dev', experience_years=5, skills=['Python', 'Git'])"
+    expected_repr = (
+        "AdvancedDeveloper(username='caleb_dev', experience_years=5, skills=['Python', 'Git'])"
+    )
     assert repr(dev) == expected_repr
 
     # When & Then (Testing __str__)

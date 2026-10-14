@@ -1,15 +1,16 @@
 """
-    Module containing inventory structures for infrastructure server nodes.
+Module containing inventory structures for infrastructure server nodes.
 """
 
 from typing import Any
 
+
 class Server:
     """
-        Represents an infrastructure server node with capability metrics.
+    Represents an infrastructure server node with capability metrics.
     """
 
-    def __init__(self, name:str , os_name: str, version: str, services: list[str]) -> None:
+    def __init__(self, name: str, os_name: str, version: str, services: list[str]) -> None:
 
         self.name: str = name
         self.os: str = os_name
@@ -17,7 +18,7 @@ class Server:
         self.services: list[str] = list(services)
 
     def __repr__(self) -> str:
-                return f"Server({self.name}, {self.os}, {self.version}, {len(self.services)} services)"
+        return f"Server({self.name}, {self.os}, {self.version}, {len(self.services)} services)"
 
     def __eq__(self, other: Any) -> bool:
         if not isinstance(other, Server):
@@ -30,7 +31,7 @@ class Server:
     def __lt__(self, other: "Server") -> bool:
         if not isinstance(other, Server):
             return NotImplemented
-        # This works only i while commenting out the following line, bc it's comparing the version 
+        # This works only i while commenting out the following line, bc it's comparing the version
         # numbers as tuples of integers, which is a valid comparison in Python
         return self._version() < other._version()
 

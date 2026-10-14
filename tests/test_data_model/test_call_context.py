@@ -1,8 +1,9 @@
 """
-    Unit tests for callable and context manager lifecycle boundaries.
+Unit tests for callable and context manager lifecycle boundaries.
 """
 
 import pytest
+
 from python_advanced_lab.data_model.call_context import SecureRunner
 
 

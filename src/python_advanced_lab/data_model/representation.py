@@ -7,7 +7,7 @@ from typing import Self
 
 class AdvancedDeveloper:
     """
-        Represents a developer with core metrics using Python Data Model techniques.
+    Represents a developer with core metrics using Python Data Model techniques.
     """
 
     def __init__(self, username: str, experience_years: int, skills: list[str]) -> None:

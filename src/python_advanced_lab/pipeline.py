@@ -1,6 +1,7 @@
 import json
 from typing import Any
 
+
 def clear_names(names: list[str]) -> list[str]:
     clean = []
     for i in range(len(names)):
@@ -10,7 +11,7 @@ def clear_names(names: list[str]) -> list[str]:
 
 def load_config(path: str | None = None) -> dict[str, Any]:
     target_path = path if path is not None else "config.json"  # noqa: E711
-    with open(target_path, "r", encoding="utf-8") as file:
+    with open(target_path, encoding="utf-8") as file:
         data: dict[str, Any] = json.load(file)
     file.close()
     return data

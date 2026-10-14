@@ -1,16 +1,18 @@
 """
-    Unit tests validating the protocol-driven Ollama Chat engine functionality.
+Unit tests validating the protocol-driven Ollama Chat engine functionality.
 """
 
 from unittest.mock import MagicMock, patch
+
 import pytest
+
 from python_advanced_lab.llm_engine.core import Chat
 
 
 @pytest.fixture
 def mock_ollama_response() -> MagicMock:
     """
-        Creates a standardized mock response mimicking the Ollama API structure.
+    Creates a standardized mock response mimicking the Ollama API structure.
     """
     mock_res = MagicMock()
     mock_res.message.content = "Oslo is the capital of Norway."
@@ -18,9 +20,11 @@ def mock_ollama_response() -> MagicMock:
 
 
 @patch("ollama.chat")
-def test_chat_callable_and_stateful_memory(mock_chat: MagicMock, mock_ollama_response: MagicMock) -> None:
+def test_chat_callable_and_stateful_memory(
+    mock_chat: MagicMock, mock_ollama_response: MagicMock
+) -> None:
     """
-        Validates that __call__ appends messages and routes payloads correctly.
+    Validates that __call__ appends messages and routes payloads correctly.
     """
     # Given
     mock_chat.return_value = mock_ollama_response
@@ -39,11 +43,11 @@ def test_chat_callable_and_stateful_memory(mock_chat: MagicMock, mock_ollama_res
 @patch("ollama.chat")
 def test_chat_collection_protocols(mock_chat: MagicMock, mock_ollama_response: MagicMock) -> None:
     """
-        Ensures len, getitem, and contains work harmoniously as a collection.
+    Ensures len, getitem, and contains work harmoniously as a collection.
     """
     mock_chat.return_value = mock_ollama_response
     chat = Chat()
-    
+
     chat("Query sample")
 
     # Test __len__
@@ -65,7 +69,7 @@ def test_context_manager_transcript_lifecycle(
     mock_chat: MagicMock, mock_ollama_response: MagicMock, tmp_path: pytest.TempPathFactory
 ) -> None:
     """
-        Validates __enter__ and __exit__ execution context behavior.
+    Validates __enter__ and __exit__ execution context behavior.
     """
     mock_chat.return_value = mock_ollama_response
 
