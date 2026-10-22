@@ -45,4 +45,9 @@ class Server:
         """
             Installs an additional service into the running environment pipeline.
         """
+        if service in self.services:
+            raise ValueError("The service is already installed")
         self.services.append(service)
+
+        # Example of production damage during testing caused by human error
+        #self.services.append(service)

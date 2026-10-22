@@ -2,6 +2,7 @@
     Unit tests validating the inventory domain entities via pytest assertions.
 """
 
+import pytest
 from python_advanced_lab.testing_lab.inventory import Server
 
 
@@ -63,3 +64,11 @@ def test_install_adds_a_service():
 
     # Then: the server has three services
     assert len(server) == 3
+
+def test_install_duplicate_service_raises_error() -> None:
+    # Given: A server that already has dbt
+    server = Server("etl-01", "ubuntu", "20.04", ["airflow", "dbt"])
+
+    # When / Then: Installing dbt should raise a ValueError.
+    with pytest.raises(ValueError, match="The service is already installed"):
+        server.install("dbt")
