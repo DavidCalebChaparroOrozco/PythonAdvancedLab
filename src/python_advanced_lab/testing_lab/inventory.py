@@ -40,3 +40,9 @@ class Server:
 
     def __len__(self) -> int:
         return len(self.services)
+
+    def install(self, service: str) -> None:
+        """
+            Installs an additional service into the running environment pipeline.
+        """
+        self.services.append(service)
