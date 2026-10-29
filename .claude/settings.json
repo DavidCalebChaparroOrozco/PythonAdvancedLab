@@ -1,16 +1,36 @@
 {
     "hooks": {
         "PostToolUse": [
-        {
-            "matcher": "Edit|Write",
-            "hooks": [
             {
-                "type": "command",
-                "command": "uv",
-                "args": ["run", "ruff", "format", "."]
+                "matcher": "Edit|Write",
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "uv",
+                        "args": [
+                            "run",
+                            "ruff",
+                            "format",
+                            "."
+                        ]
+                    }
+                ]
             }
-            ]
-        }
+        ],
+        "Stop": [
+            {
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "uv",
+                        "args": [
+                            "run",
+                            "python",
+                            ".claude/hooks/verify_test.py"
+                        ]
+                    }
+                ]
+            }
         ]
     }
 }
