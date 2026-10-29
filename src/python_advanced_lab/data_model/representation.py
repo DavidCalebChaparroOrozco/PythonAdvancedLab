@@ -32,7 +32,10 @@ class AdvancedDeveloper:
         """
         User-friendly representation for logging and display purposes.
         """
-        return f"Developer @{self.username} ({self.experience_years} YOE) | Skills: {', '.join(self.skills)}"
+        return (
+            f"Developer @{self.username} ({self.experience_years} YOE) | "
+            f"Skills: {', '.join(self.skills)}"
+        )
 
     def add_skill(self, skill: str) -> Self:
         """

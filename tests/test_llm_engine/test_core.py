@@ -74,7 +74,7 @@ def test_context_manager_transcript_lifecycle(
     mock_chat.return_value = mock_ollama_response
 
     # Force writing transcript to a safe test directory instead of project root
-    with patch("builtins.open", patch("builtins.open").new) as mock_open:
+    with patch("builtins.open", patch("builtins.open").new):
         with Chat() as active_chat:
             active_chat("Hello agent")
             assert len(active_chat) == 2

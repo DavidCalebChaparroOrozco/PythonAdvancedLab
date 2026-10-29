@@ -1,5 +1,5 @@
 """
-    Deterministic agent lifecyle stop hook to enforce quality gates before session teardown.
+Deterministic agent lifecyle stop hook to enforce quality gates before session teardown.
 """
 
 import json
@@ -10,7 +10,7 @@ from typing import Any
 
 def run_verification_pipeline() -> None:
     """
-        Parses agent state via stdin and executes strict ruff and pytest quality gates.
+    Parses agent state via stdin and executes strict ruff and pytest quality gates.
     """
     # Safe parsing of the agent session event dictionary payload
     entry: dict[str, Any] = json.load(sys.stdin)

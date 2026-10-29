@@ -1,8 +1,9 @@
 """
-    Unit tests validating the inventory domain entities via pytest assertions.
+Unit tests validating the inventory domain entities via pytest assertions.
 """
 
 import pytest
+
 from python_advanced_lab.testing_lab.inventory import Server
 
 
@@ -72,3 +73,23 @@ def test_install_duplicate_service_raises_error() -> None:
     # When / Then: Installing dbt should raise a ValueError.
     with pytest.raises(ValueError, match="The service is already installed"):
         server.install("dbt")
+
+
+def test_uninstall_removes_a_service() -> None:
+    # Given: a server with two services
+    server = Server("etl-01", "ubuntu", "20.04", ["airflow", "dbt"])
+
+    # When: we uninstall one of them
+    server.uninstall("dbt")
+
+    # Then: only the remaining service is left
+    assert server.services == ["airflow"]
+
+
+def test_uninstall_missing_service_raises_error() -> None:
+    # Given: A server that does not have grafana
+    server = Server("etl-01", "ubuntu", "20.04", ["airflow", "dbt"])
+
+    # When / Then: Uninstalling grafana should raise a ValueError.
+    with pytest.raises(ValueError, match="Service 'grafana' is not installed."):
+        server.uninstall("grafana")
