@@ -1,5 +1,5 @@
 """
-Module containing inventory structures for infrastructure server nodes.
+    Module containing inventory structures for infrastructure server nodes.
 """
 
 from typing import Any
@@ -43,11 +43,11 @@ class Server:
 
     def install(self, service: str) -> None:
         """
-            Installs an additional service into the running environment pipeline.
+        Installs an additional service into the running environment pipeline.
         """
         if service in self.services:
             raise ValueError("The service is already installed")
         self.services.append(service)
 
         # Example of production damage during testing caused by human error
-        #self.services.append(service)
+        # self.services.append(service)

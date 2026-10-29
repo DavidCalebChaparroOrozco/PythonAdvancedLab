@@ -53,17 +53,17 @@ def test_min_returns_the_most_outdated_one():
     # Then: the server with the oldest version is returned
     assert result is d
 
+
 def test_install_adds_a_service():
     # Given: a server with two services
-    server = Server(
-        "etl-01", "ubuntu", "20.04", ["airflow", "dbt"]
-    )
+    server = Server("etl-01", "ubuntu", "20.04", ["airflow", "dbt"])
 
     # When: we install an additional service
     server.install("grafana")
 
     # Then: the server has three services
     assert len(server) == 3
+
 
 def test_install_duplicate_service_raises_error() -> None:
     # Given: A server that already has dbt
