@@ -66,9 +66,7 @@ We can organize these components into the Given-When-Then structure and give the
 ```python
 def test_server_returns_number_of_services():
     # Given: a server with two services
-    server = Server(
-        "etl-01", "ubuntu", "20.04", ["airflow", "dbt"]
-    )
+    server = Server("etl-01", "ubuntu", "20.04", ["airflow", "dbt"])
 
     # When: we get the number of services
     count = len(server)
@@ -98,9 +96,7 @@ Some actions modify an object's state. In these cases, the Given-When-Then struc
 ```python
 def test_install_adds_a_service():
     # Given: a server with two services
-    server = Server(
-        "etl-01", "ubuntu", "20.04", ["airflow", "dbt"]
-    )
+    server = Server("etl-01", "ubuntu", "20.04", ["airflow", "dbt"])
 
     # When: we install an additional service
     server.install("grafana")
@@ -127,12 +123,8 @@ When the action being tested is a comparison, we can store its result in a varia
 ```python
 def test_older_version_is_lower():
     # Given: two servers with different versions
-    old = Server(
-        "etl-01", "ubuntu", "18.04", ["airflow"]
-    )
-    new = Server(
-        "web-01", "ubuntu", "24.04", ["nginx"]
-    )
+    old = Server("etl-01", "ubuntu", "18.04", ["airflow"])
+    new = Server("web-01", "ubuntu", "24.04", ["nginx"])
 
     # When: we compare both servers
     resultado = old < new
@@ -213,11 +205,10 @@ The test passes if the code raises the specified exception or one of its subclas
 ```python
 import pytest
 
+
 def test_installing_duplicate_service_raises_error():
     # Given: a server that already has 'dbt' installed
-    server = Server(
-        "etl-01", "ubuntu", "20.04", ["airflow", "dbt"]
-    )
+    server = Server("etl-01", "ubuntu", "20.04", ["airflow", "dbt"])
 
     # When / Then: installing 'dbt' should raise a ValueError
     with pytest.raises(ValueError):
