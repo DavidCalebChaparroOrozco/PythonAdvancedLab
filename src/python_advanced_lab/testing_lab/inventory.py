@@ -1,5 +1,5 @@
 """
-    Module containing inventory structures for infrastructure server nodes.
+Module containing inventory structures for infrastructure server nodes.
 """
 
 from typing import Any
@@ -51,3 +51,11 @@ class Server:
 
         # Example of production damage during testing caused by human error
         # self.services.append(service)
+
+    def uninstall(self, service: str) -> None:
+        """
+        Removes an installed service from the running environment pipeline.
+        """
+        if service not in self.services:
+            raise ValueError(f"Service {service!r} is not installed.")
+        self.services.remove(service)
