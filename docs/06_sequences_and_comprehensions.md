@@ -244,7 +244,7 @@ Example:
 nums = [10, 20, 30]
 
 nums.append(40)  # Add an element
-nums[0] = 100    # Modify an element
+nums[0] = 100  # Modify an element
 
 print(nums)
 # [100, 20, 30, 40]
@@ -374,11 +374,7 @@ A list comprehension is a concise way to create a new list from an existing iter
 Instead of writing a traditional loop, we can express the same logic in a single statement:
 
 ```python
-ubuntu_names = [
-    server.name
-    for server in servers
-    if server.os == "ubuntu"
-]
+ubuntu_names = [server.name for server in servers if server.os == "ubuntu"]
 
 print(ubuntu_names)
 # ['etl-01', 'web-01']
@@ -499,6 +495,7 @@ Example:
 def name_of(server):
     return server.name
 
+
 names = map(name_of, servers)
 
 print(names)
@@ -519,7 +516,7 @@ How does it work?
 Important: Pass the function, not the result of calling it.
 
 ```python
-map(name_of, servers)    # Correct
+map(name_of, servers)  # Correct
 map(name_of(), servers)  # Incorrect
 ```
 
@@ -552,6 +549,7 @@ Example:
 ```python
 def is_ubuntu(server):
     return server.os == "ubuntu"
+
 
 ubuntu_servers = filter(is_ubuntu, servers)
 
@@ -632,15 +630,7 @@ Suppose we want to retrieve the names of all servers running Ubuntu.
 We can accomplish this using both `filter()` and `map()`:
 
 ```python
-with_map = list(
-    map(
-        lambda s: s.name,
-        filter(
-            lambda s: s.os == "ubuntu",
-            servers
-        )
-    )
-)
+with_map = list(map(lambda s: s.name, filter(lambda s: s.os == "ubuntu", servers)))
 
 print(with_map)
 # ['etl-01', 'web-01']
@@ -663,11 +653,7 @@ The execution flow looks like this:
 We can achieve exactly the same result using a list comprehension:
 
 ```python
-names = [
-    server.name
-    for server in servers
-    if server.os == "ubuntu"
-]
+names = [server.name for server in servers if server.os == "ubuntu"]
 
 print(names)
 # ['etl-01', 'web-01']

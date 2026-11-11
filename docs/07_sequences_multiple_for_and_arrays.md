@@ -96,17 +96,15 @@ A list comprehension can contain multiple `for` clauses. These clauses behave li
 
 ```python
 # Generate all combinations of servers and monitoring checks.
-plan_comprehension = [
-    (s.name, check)
-    for s in servers
-    for check in checks
-]
+plan_comprehension = [(s.name, check) for s in servers for check in checks]
 
 # Check whether the list comprehension produces the same result as the traditional loops.
 print(plan_comprehension == plan)  # True
 
 # Display the first four monitoring tasks.
-print(plan_comprehension[:4])  # [('etl-01', 'cpu'), ('etl-01', 'disk'), ('etl-01', 'memory'), ('db-01', 'cpu')]
+print(
+    plan_comprehension[:4]
+)  # [('etl-01', 'cpu'), ('etl-01', 'disk'), ('etl-01', 'memory'), ('db-01', 'cpu')]
 ```
 
 How it works:
@@ -157,7 +155,7 @@ Unlike the Cartesian product, the number of iterations in the second loop depend
 # Create a list containing each server and its installed services.
 installed = [
     (s.name, service)  # Create a tuple with the server name and service.
-    for s in servers   # Iterate over every server.
+    for s in servers  # Iterate over every server.
     for service in s.services  # Iterate over the services installed on the current server.
 ]
 
@@ -223,10 +221,7 @@ PySpark example:
 ```python
 from pyspark.sql.functions import explode
 
-df_exploded = df.select(
-    "server",
-    explode("services").alias("service")
-)
+df_exploded = df.select("server", explode("services").alias("service"))
 ```
 
 > Key takeaway: Flattening transforms nested data into individual records, making it easier to filter, analyze, aggregate, and process each element independently.
