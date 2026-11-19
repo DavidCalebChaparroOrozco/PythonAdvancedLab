@@ -363,6 +363,7 @@ def check(check_name, result):
     print(f"Checking {check_name}...")
     return result
 
+
 print(check("Disk", False) and check("CPU", True))
 # Checking Disk...
 # False
@@ -442,6 +443,7 @@ Imagine we have multiple servers and want to check whether at least one of them 
 def has_service(server, service):
     print(f"Querying {server.name}...")
     return service in server.services
+
 
 print(any(has_service(s, "redis") for s in servers))
 # Querying etl-01...
