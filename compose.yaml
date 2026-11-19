@@ -1,0 +1,31 @@
+services:
+  etl-01:
+    build: servers/etl-01
+    hostname: etl-01
+    init: true
+
+  db-01:
+    build: servers/db-01
+    hostname: db-01
+    init: true
+
+  web-01:
+    build: servers/web-01
+    hostname: web-01
+    init: true
+
+  bi-01:
+    image: rockylinux/rockylinux:9
+    hostname: bi-01
+    init: true
+    command: sleep infinity
+
+  bastion:
+    image: python:3.14-slim
+    working_dir: /project
+    volumes:
+      - .:/project
+    environment:
+      PYTHONDONTWRITEBYTECODE: "1"
+    profiles:
+      - tools
