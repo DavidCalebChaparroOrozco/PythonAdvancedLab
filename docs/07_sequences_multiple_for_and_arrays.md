@@ -314,3 +314,216 @@ How it works:
 Important distinction: `sys.getsizeof()` measures the size of the object itself, not necessarily the total memory occupied by everything it references. For a list, it does not include the full memory footprint of all its elements. For a generator, it does not include the memory needed to produce future values.
 
 > Key takeaway: Generators are memory-efficient because they avoid storing an entire collection of results. Instead, they produce values one at a time, making them particularly useful for processing large datasets.
+
+---
+
+## **Short-Circuiting**
+
+### **Stopping evaluation once the result is known**
+
+Short-circuiting is a behavior in Python where logical expressions stop being evaluated as soon as the final result is determined.
+
+- **With**`and`**:** If any value is `False`, the entire expression is `False`. Python stops evaluating as soon as it finds the first `False`.
+- **With**`or`**:** If any value is `True`, the entire expression is `True`. Python stops evaluating as soon as it finds the first `True`.
+
+### **Examples**
+
+**Using** `and`**:**
+
+```python
+True and True and True and True
+# True
+
+False and True and True and True
+# False
+```
+
+**Using** `or`**:**
+
+```python
+False or False or False or False
+# False
+
+False or True or False or False
+# True
+```
+
+### **Key idea**
+
+Python evaluates logical expressions from left to right and skips the remaining parts whenever the result is already known. This improves efficiency and can prevent unnecessary operations.
+
+---
+
+### **Seeing Short-Circuiting in Action with**`check()`
+
+We can use a function to see how Python evaluates logical expressions and skips unnecessary operations.
+
+```python
+def check(check_name, result):
+    print(f"Checking {check_name}...")
+    return result
+
+print(check("Disk", False) and check("CPU", True))
+# Checking Disk...
+# False
+
+print(check("Disk", True) or check("CPU", False))
+# Checking Disk...
+# True
+```
+
+**What's happening?**
+
+1. **Using **`and`**:** Python evaluates `check("Disk", False)` first. Since it returns `False`, the entire expression must be `False`. Therefore, `check("CPU", True)` is never executed.
+2. **Using **`or`**:** Python evaluates `check("Disk", True)` first. Since it returns `True`, the entire expression must be `True`. Therefore, `check("CPU", False)` is never executed.
+
+### **Real-World Example: Filtering Outdated Versions**
+
+We've already used short-circuiting without explicitly calling it that.
+
+In the previous lesson, we had this condition:
+
+```python
+s.so == system and s < reference
+```
+
+Python first checks whether `s.so == system`.
+
+- If the systems don't match (`False`), Python skips the second comparison.
+- If the systems match (`True`), Python evaluates `s < reference`.
+
+**Key idea:** Short-circuiting avoids unnecessary comparisons and operations by stopping as soon as the result is known.
+
+---
+
+### `any()` **and** `all()`
+
+Python provides two built-in functions that apply logical checks to an entire iterable (such as a list, tuple, or generator).
+
+- `any()`**:** Returns `True` if at least one element is truthy. It stops evaluating as soon as it finds the first truthy element. Returns `False` if all elements are falsy or the iterable is empty.
+- `all()`**:** Returns `True` if every element is truthy. It stops evaluating as soon as it finds the first falsy element. Returns `False` if at least one element is falsy or the iterable is empty.
+
+### **Examples**
+
+```python
+print(any([False, True, False]))
+# True
+print(all([True, False, True]))
+# False
+```
+
+### **More examples**
+
+```python
+print(any([False, False, False]))
+# False
+print(all([True, True, True]))
+# True
+```
+
+### **Key idea**
+
+- `any()` works like a chain of `or` operations.
+- `all()` works like a chain of `and` operations.
+
+Both use short-circuiting, meaning they stop as soon as the final result is known.
+
+---
+
+## **Short-Circuiting + Generator Expressions**
+
+Generator expressions work particularly well with `any()` and `all()` because they allow Python to evaluate elements one at a time and stop as soon as the result is known.
+
+### **Example: Checking Remote Servers**
+
+Imagine we have multiple servers and want to check whether at least one of them has Redis installed.
+
+```python
+def has_service(server, service):
+    print(f"Querying {server.name}...")
+    return service in server.services
+
+print(any(has_service(s, "redis") for s in servers))
+# Querying etl-01...
+# Querying db-01...
+# Querying web-01...
+# True
+```
+
+**What's happening?**
+
+1. The generator expression checks one server at a time.
+2. `any()` evaluates each result as it receives it.
+3. Once it finds a server with Redis, it returns `True`.
+4. The remaining servers are never checked.
+
+### **Now, using square brackets**
+
+```python
+print(any([has_service(s, "redis") for s in servers]))
+# Querying etl-01...
+# Querying db-01...
+# Querying web-01...
+# Querying bi-01...
+# True
+```
+
+**What's happening?**
+
+The list comprehension builds the entire list before passing it to `any()`.
+
+This means:
+
+- Every server is checked first.
+- Only after the list is complete does `any()` start evaluating its elements.
+- Short-circuiting cannot prevent the unnecessary queries because they have already happened.
+
+### **Why does this matter?**
+
+Imagine checking 1,000 servers:
+
+- **Generator expression:** Stops as soon as Redis is found.
+- **List comprehension:** Checks all 1,000 servers before `any()` starts.
+
+If the match is found on the first server, the list comprehension performs 999 unnecessary queries.
+
+
+
+Best practice: Use generator expressions with `any()` and `all()` when you don't need to store the results.
+
+```python
+any(has_service(s, "redis") for s in servers)
+all(has_service(s, "redis") for s in servers)
+```
+
+### **Ruff C419: Unnecessary List Comprehension**
+
+Ruff flags `any([...])` as an unnecessary list comprehension because the list doesn't need to be created.
+
+Instead of:
+
+```python
+any([x > 0 for x in numbers])
+```
+
+Use:
+
+```python
+any(x > 0 for x in numbers)
+```
+
+The second version is more memory-efficient and allows short-circuiting during iteration.
+
+## **A Brief Summary**
+
+| Concept              | What it does                                                  |
+| -------------------- | ------------------------------------------------------------- |
+| Short-circuiting     | Stops evaluating once the result is known.                    |
+| `and`                | Stops at the first falsy value.                               |
+| `or`                 | Stops at the first truthy value.                              |
+| `any()`              | Returns `True` if at least one element is truthy.             |
+| `all()`              | Returns `True` if every element is truthy.                    |
+| Generator expression | Evaluates elements lazily, one at a time.                     |
+| List comprehension   | Builds the entire list before passing it to another function. |
+
+**Key takeaway:** Combine generator expressions with `any()` and `all()` to avoid unnecessary computations, reduce memory usage, and take full advantage of short-circuiting.
